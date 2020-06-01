@@ -22,7 +22,14 @@ class HashTable:
 
     def __init__(self, capacity):
         # Your code here
-
+        self.capacity = capacity
+        self.storage = [HashTableEntry(i, None) for i in range(capacity)]
+    
+    def __str__(self):
+        return_str = '['
+        for i in range(self.capacity-1):
+            return_str += f'{self.storage[i].value}, '
+        return return_str + f'{self.storage[self.capacity-1].value}]'
 
     def get_num_slots(self):
         """
@@ -35,6 +42,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        return self.capacity
 
 
     def get_load_factor(self):
@@ -63,6 +71,10 @@ class HashTable:
         Implement this, and/or FNV-1.
         """
         # Your code here
+        hash = 5381
+        for c in key:
+            hash = hash * 33 + ord(c)
+        return hash
 
 
     def hash_index(self, key):
@@ -82,6 +94,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        slot = self.hash_index(key)
+        self.storage[slot].value = value
 
 
     def delete(self, key):
@@ -93,6 +107,7 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        self.put(key, None)
 
 
     def get(self, key):
@@ -104,6 +119,8 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        index = self.hash_index(key)
+        return self.storage[index].value
 
 
     def resize(self, new_capacity):
@@ -119,7 +136,9 @@ class HashTable:
 
 if __name__ == "__main__":
     ht = HashTable(8)
-
+    # print(ht.capacity)
+    # print(ht)
+    # print(ht.get_num_slots())
     ht.put("line_1", "'Twas brillig, and the slithy toves")
     ht.put("line_2", "Did gyre and gimble in the wabe:")
     ht.put("line_3", "All mimsy were the borogoves,")

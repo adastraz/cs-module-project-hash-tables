@@ -1,5 +1,17 @@
+"""
+very simalar to word count
+-> if word has been stored, and it shows up again, delete one version
+-> only unique words should be displayed
+"""
 def no_dups(s):
-    # Your code here
+    arr = s.split(' ')
+    words = {}
+    for word in arr:
+        if word in words:
+            continue
+        else:
+            words[word] = True
+    return ' '.join(words)
 
 
 
